@@ -1,0 +1,20 @@
+{
+	"name": "message passing",
+	"content_scripts":[
+	{
+		"matches": ["https://*.youtube.com/watch*"],
+		"js": ["myscript.js"]
+	}],
+	"background": {
+		"scripts":["jquery.js", "background.js"]
+		
+	},
+	"browser_action":{
+		"default_icon": "icon16.png",
+		"default_title": "Message Passing",
+		"default_popup": "popup.html"
+	},
+	"manifest_version": 2,
+	"version": "0.1",
+	"permissions": [ "tabs" ]
+}
