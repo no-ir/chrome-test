@@ -1,3 +1,4 @@
+
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 	if(message === "psend"){
 		console.log("received...");
@@ -17,14 +18,19 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 });
 
 chrome.tabs.onCreated.addListener(function(tab){
-	console.log("created");
-	console.log(tab.id);
+	var re = new RegExp('.*.youtube.com\/watch\\?v=');
 
-	if(tab.id){
-		var html = '<div class="row" id="' + tab.id + '"><p>' + tab.url + '</p></div>';
-		$('body').append(html);
-	} else {
-		console.log("tab.id not set");
+	if(re.test(tab.url)){
+		if(tab.id){
+			var html = '<div class="row" id="' + tab.id + '"><p>' + tab.url + '</p></div>';
+			$('body').append(html);
+		} else {
+			console.log("tab.id not set");
+		}
+	}
+	else
+	{
+		console.log("tab url did not match reg exp");
 	}
 });
 
@@ -34,6 +40,5 @@ chrome.tabs.onActivated.addListener(function(activeInfo){
 
 chrome.tabs.onRemoved.addListener(function(tabId, removeInfo){
 	console.log("removing");
-
 	$('#'+tabId).remove();
 });
