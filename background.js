@@ -12,39 +12,30 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
-	//console.log(changeInfo.status);
-	//console.log(tab);
-
-	var currentTitle = $('#'+tabId+' p').html();
-	//console.log("current: "+currentTitle);
-	var tabTitle = tab.title;
-	//console.log("tab title: "+tab.title);
-	if (tab.status === "complete" && currentTitle !== tabTitle)
-	{
-		var foundtab = $('#'+tabId);
-
-		if(foundtab.length === 0){
-			console.log('new tab');
-			var re = new RegExp('.*.youtube.com\/watch\\?v=');
-
-			if(re.test(tab.url)){
-				if(tab.id){
-					var html = '<div class="row" id="' + tab.id + '"><p>' + tab.title + '</p></div>';
-					$('body').append(html);
-				} else {
-					console.log("tab.id not set");
-				}
-			}
-			else
-			{
-				console.log("tab url did not match reg exp");
+	var re = /.*\.youtube.com\/watch\?v=.*/;
+	if (tab.status === "complete") {
+		var foundTab = $('#'+tabId);
+		var foundMatch = re.exec(tab.url);
+		
+		if(foundTab.length === 0 && foundMatch != null) {
+			//new
+			if(tab.id) {
+				var html = '<div class="row" id="' + tab.id + '"><p>' + tab.title + '</p></div>';
+				$('body').append(html);
 			}
 		}
-		else{
-			$('#'+tabId).html('<p>'+tab.title+'</p>');
-			console.log("updating info: "+ tab.title);
+		else if(foundTab.length > 0){
+			if(foundMatch != null) {
+				//removing
+				console.log('removing tab from html');
+				$('#'+tabId).remove();
+			}
+			else if(foundMatch == null) {
+				//update
+				$('#'+tabId).html('<p>' + tab.title + '</p>');
+				console.log('updating info: '+tab.title);
+			}
 		}
-
 	}
 });
 
