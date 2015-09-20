@@ -13,28 +13,26 @@ chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 	var re = /.*\.youtube.com\/watch\?v=.*/;
+	var foundMatch = re.exec(tab.url);
+	var foundTab = $('#'+tabId);
+
 	if (tab.status === "complete") {
-		var foundTab = $('#'+tabId);
-		var foundMatch = re.exec(tab.url);
-		
 		if(foundTab.length === 0 && foundMatch != null) {
-			//new
+			console.log("new tab");
 			if(tab.id) {
 				var html = '<div class="row" id="' + tab.id + '"><p>' + tab.title + '</p></div>';
 				$('body').append(html);
 			}
 		}
-		else if(foundTab.length > 0){
-			if(foundMatch != null) {
+		else if(foundTab.length > 0 && foundMatch == null) {
 				//removing
 				console.log('removing tab from html');
 				$('#'+tabId).remove();
-			}
-			else if(foundMatch == null) {
+		}
+		else if(foundTab.length > 0 && foundMatch != null) {
 				//update
 				$('#'+tabId).html('<p>' + tab.title + '</p>');
 				console.log('updating info: '+tab.title);
-			}
 		}
 	}
 });
