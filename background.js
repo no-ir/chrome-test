@@ -1,11 +1,10 @@
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse){
 	if(message === "psend"){
 		console.log("received...");
-		sendResponse({response: $('body').html()})
+		sendResponse({response: $('#content').html()})
 	}
 	else{
-		console.log(message);
-		$('body').append("<p>Aphex</p>");
+		console.log("do " + message.action+ " on " + message.tabId)
 	}
 
 });
@@ -19,13 +18,13 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 		if(foundTab.length === 0 && foundMatch != null) {
 			console.log("new tab");
 			if(tab.id) {
-				var html = '<div class="row" id="'+ tabId +'"><div class="title"><p>' + (tab.title).slice(0, 20) + '...' + '</p></div> \
-						  <div class="controls"><ul><li><a href="play"><img src="play-circle-2x.png"></a></li> \
-						  <li><a href="pause"><img src="media-pause-2x.png"></a></li> \
-						  <li><a href="next"><img src="media-skip-forward-2x.png"></a></li> \
-						  <li><a href="mute"><img src="volume-off-2x.png"></a></li></ul></div></div>';
+				var html = '<div class="row" id="'+ tabId +'">\
+						   <div class="title"><p>' + (tab.title).slice(0, 20) + '...' + '</p></div> \
+						   <div class="controls"><ul><li class="play"><img src="play-circle-2x.png"></li> \
+						   <li class="pause"><img src="media-pause-2x.png"></li> \
+						   <li class="mute"><img src="volume-off-2x.png"></li></ul></div></div>';
 
-				$('body').append(html);
+				$('#content').append(html);
 			}
 		}
 		else if(foundTab.length > 0 && foundMatch == null) {
@@ -35,7 +34,7 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab){
 		}
 		else if(foundTab.length > 0 && foundMatch != null) {
 			//update
-			$('#'+tabId+'> div p').html('<p>' + (tab.title).slice(0, 20) + '...</p>');
+			$('#'+tabId+'> div p').html((tab.title).slice(0, 20)+'...');
 			console.log('updating info: '+tab.title);
 		}
 	}
