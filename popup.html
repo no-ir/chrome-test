@@ -4,8 +4,48 @@
 body {
 	color:black;
 	min-width:240px;
+	background-color:#eee;
+	
+}
+
+.title {
+    float:left;
+}
+
+.title p{
+    font-family: "Helvetica", "Arial", sans-serif;
+    font-size:1.1em;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
 
 }
+
+.controls {
+    float:right;
+    padding-top:2px;
+}
+
+.row {
+    height:1em;
+    width:20em;
+    background-color:#eee;
+    margin:2px;
+    
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border:1px solid #CCCCCC;
+    background-color:#FFFFFF;
+    
+    padding-left:5px;
+    padding-bottom:5px;
+    padding-right:5px;
+    padding-top:2px;
+}
+.controls {
+
+}
+
 .controls ul {
     text-decoration:none;
     padding: 0 0 0 0;
@@ -15,45 +55,26 @@ body {
 
 .controls ul li{
     display:inline;
-}
-
-.controls ul li a {
-    text-decoration:none;
-}
-
-.controls {
-    float:right;
-    padding-top:2px;
-}
-
-.row {
-    height: 20px;
-    width:20em;
-    background-color:#eee;
-    margin:1px;
-}
-.title {
-    float:left;
-}
-
-.title p{
-
-    font-family: "Helvetica", "Arial", sans-serif;
-    font-size:1em;
     padding: 0 0 0 0;
     margin: 0 0 0 0;
-    padding-top:2px;
-    padding-bottom:2px;
-    padding-left:2px;
+}
+
+.controls ul li img {
+	height:100%;
+}
+
+li {
+    cursor: pointer;
 }
 
 </style>
-<script src="jquery.js"></script>
-<script src="popup.js"></script>
+
 </head>
 <body>
-	<h4>Youtube Tab Manager</h4>
+	<h3>Youtube Tab Manager</h3>
 	<div id="content">
-
+    
 	</div>
+    <script src="jquery.js"></script>
+    <script src="popup.js"></script>
 </body>
